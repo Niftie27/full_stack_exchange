@@ -10,6 +10,9 @@ contract Exchange {
 	uint256 public feePercent;
 	//token address, user address, amount
 	mapping(address => mapping(address => uint256)) public tokens;
+	mapping(uint256 => _Order) public orders;
+	uint256 public orderCount;
+
 
 	event Deposit(address token, address user, uint256 amount, uint256 balance);
 	event Withdraw(
@@ -18,6 +21,28 @@ contract Exchange {
 		uint256 amount, 
 		uint256 balance
 	);
+
+	// Way to model the order
+	event Order(
+		uint256 id,
+		address user,
+		address tokenGet,
+		uint256 amountGet,
+		address	tokenGive,
+		uint256 amountGive,
+		uint256 timestamp
+	);
+
+	struct _Order {
+		// Attributes of an order
+		uint256 id;			// Unique identifier for order
+		address user;		// user who made order
+		address tokenGet;	// Address of the token they receive
+		uint256 amountGet;	// Amount they receive
+		address tokenGive;	// Address of the token they give 
+		uint256 amountGive;	// Amount they give
+		uint256 timestamp;	// When order was created
+	}
 
 	constructor(address _feeAccount, uint256 _feePercent) {
 		feeAccount = _feeAccount;
@@ -42,7 +67,6 @@ contract Exchange {
 		// Ensure user has enough tokens to withdraw
 		require(tokens[_token][msg.sender] >= _amount);
 
-
 		// Transfer tokens to user
 		Token(_token).transfer(msg.sender, _amount);
 
@@ -61,6 +85,58 @@ contract Exchange {
 		returns (uint256)
 	{
 		return tokens[_token][_user];
+	}
+
+	// --------------------------
+	// MAKE AND CANCEL ORDER
+
+	// Token Give (the token they want to spend) - which token, and how much?
+	// token Get (the token they want to receive) - which token, and how much?
+	function makeOrder(
+		address _tokenGet, 
+		uint256 _amountGet, 
+		address _tokenGive, 
+		uint256 _amountGive
+	) public {
+		// Prevent orders if tokens aren't on exchange
+		require(balanceOf(_tokenGive, msg.sender) >= _amountGive);
+		// Token Give (the token they want to spend) - which token, and how much?
+		// token Get (the token they want to receive) - which token, and how much?
+
+		// uint256 id;			// Unique identifier for order
+		// address user;		// user who made order
+		// address tokenGet;	// Address of the token they receive
+		// uint256 amountGet;	// Amount they receive
+		// address tokenGive;	// Address of the token they give 
+		// uint256 amountGive;	// Amount they give
+		// uint256 timestamp;	// When order was created
+
+		// Require token balance
+
+		// CREATE ORDER
+		orderCount = orderCount + 1;
+		orders[orderCount] = _Order(
+			orderCount,
+			msg.sender, // _user '0x0...abc123'
+			_tokenGet,	// tokenGet
+			_amountGet,	// AmountGet
+			_tokenGive,	// tokenGive
+			_amountGive, // amountGive
+			// timestamp '1/1/2030'
+			block.timestamp // timestamp 1742082942
+		);
+
+		// Emit event
+		emit Order(
+			orderCount,
+			msg.sender, // _user '0x0...abc123'
+			_tokenGet,	// tokenGet
+			_amountGet,	// AmountGet
+			_tokenGive,	// tokenGive
+			_amountGive, // amountGive
+			// timestamp '1/1/2030'
+			block.timestamp // timestamp 1742082942
+		);
 	}
 
 }
