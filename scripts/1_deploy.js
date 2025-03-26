@@ -11,9 +11,9 @@ async function main() {
   console.log(`Accounts fetched:\n${accounts[0].address}\n${accounts[1].address}\n`)
 
   // Deploy contract
-  const myt = await Token.deploy('My Token', 'MYT', '1000000')
-  await myt.deployed()
-  console.log(`MYT deployed to: ${myt.address}`)
+  const MYT = await Token.deploy('My Token', 'MYT', '1000000')
+  await MYT.deployed()
+  console.log(`MYT deployed to: ${MYT.address}`)
 
   const mETH = await Token.deploy('mETH', 'mETH', '1000000')
   await mETH.deployed()
