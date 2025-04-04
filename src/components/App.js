@@ -1,42 +1,47 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import config from '../config.json';
-import TOKEN_ABI from '../abis/Token.json';
 
-import { 
-  loadProvider, 
-  loadNetwork, 
+import {
+  loadProvider,
+  loadNetwork,
   loadAccount,
-  loadToken 
+  loadTokens,
+  loadExchange
 } from '../store/interactions';
-
 
 function App() {
   const dispatch = useDispatch()
 
   const loadBlockchainData = async () => {
-    await loadAccount(dispatch)
 
     // Connect Ethers to blockchain
     const provider = loadProvider(dispatch)
+
+    // Fetch current network's chainId (e.g. hardhat: 31337, kovan: 42)
     const chainId = await loadNetwork(provider, dispatch)
 
-    console.log()
 
-    // Token Smart Contract
-    await loadToken(provider, config[chainId].myt.address, dispatch)
+    // Fetch current account and balance from Metamask
+    await loadAccount(provider, dispatch)
+
+
+    // Load token Smart Contract
+    const myt = config[chainId].myt
+    const mETH = config[chainId].mETH
+    await loadTokens(provider, [myt.address, mETH.address], dispatch)
+
+    // Load exchange Smart Contract
+    const exchangeConfig = config[chainId].exchange
+    const exchange = await loadExchange(provider, exchangeConfig.address, dispatch)
   }
 
   useEffect(() => {
     loadBlockchainData()
-
-    // ...
   })
 
   return (
     <div>
-
-
 
       {/* Navbar */}
 
