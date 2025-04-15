@@ -7,33 +7,44 @@ import {
   loadNetwork,
   loadAccount,
   loadTokens,
-  loadExchange
+  loadExchange,
+  subscribeToEvents
 } from '../store/interactions';
+
+import Navbar from './Navbar'
+import Markets from './Markets'
+import Balance from './Balance'
 
 function App() {
   const dispatch = useDispatch()
 
   const loadBlockchainData = async () => {
-
     // Connect Ethers to blockchain
     const provider = loadProvider(dispatch)
 
     // Fetch current network's chainId (e.g. hardhat: 31337, kovan: 42)
     const chainId = await loadNetwork(provider, dispatch)
 
+    // Reload page when network changes
+    window.ethereum.on('chainChanged', () => {
+      window.location.reload()
+    })
 
-    // Fetch current account and balance from Metamask
-    await loadAccount(provider, dispatch)
+    // Fetch current account & balance from Metamask when changed
+    window.ethereum.on('accountsChanged', () => {
+      loadAccount(provider, dispatch)
+    })
 
-
-    // Load token Smart Contract
-    const myt = config[chainId].myt
+    // Load token smart contracts
+    const DApp = config[chainId].DApp
     const mETH = config[chainId].mETH
-    await loadTokens(provider, [myt.address, mETH.address], dispatch)
+    await loadTokens(provider, [DApp.address, mETH.address], dispatch)
 
-    // Load exchange Smart Contract
+    // Load exchange smart contract
     const exchangeConfig = config[chainId].exchange
     const exchange = await loadExchange(provider, exchangeConfig.address, dispatch)
+
+    subscribeToEvents(exchange, dispatch)
   }
 
   useEffect(() => {
@@ -43,14 +54,17 @@ function App() {
   return (
     <div>
 
-      {/* Navbar */}
+      <Navbar />
 
       <main className='exchange grid'>
         <section className='exchange__section--left grid'>
 
-          {/* Markets */}
 
-          {/* Balance */}
+
+
+          <Markets/>
+
+          <Balance/>
 
           {/* Order */}
 

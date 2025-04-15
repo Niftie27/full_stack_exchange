@@ -15,7 +15,7 @@ describe('Token', () => {
 
 	beforeEach(async () => {
 		const Token = await ethers.getContractFactory('Token')
-		token = await Token.deploy('My Token', 'MYT', '1000000')
+		token = await Token.deploy('My Token', 'DApp', '1000000')
 
 		accounts = await ethers.getSigners() //connect HH network with ethers
 		deployer = accounts[0]

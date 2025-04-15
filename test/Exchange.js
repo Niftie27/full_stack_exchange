@@ -15,7 +15,7 @@ describe('Exchange', () => {
 		const Exchange = await ethers.getContractFactory('Exchange')
 		const Token = await ethers.getContractFactory('Token')
 
-		token1 = await Token.deploy('My Token', 'MYT', '1000000')
+		token1 = await Token.deploy('My Token', 'DApp', '1000000')
 		token2 = await Token.deploy('Mock Dai', 'mDAI', '1000000')
 
 		accounts = await ethers.getSigners() //connect HH network with ethers
