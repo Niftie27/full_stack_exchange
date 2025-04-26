@@ -1,35 +1,30 @@
 import { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux'
 
-
-import { makeBuyOrder, makeSellOrder } from '../store/interactions';
-
+import { makeBuyOrder, makeSellOrder } from '../store/interactions'
 
 const Order = () => {
-  const[isBuy, setIsBuy] = useState(true)
-  const[amount, setAmount] = useState(0)
-  const[price, setPrice] = useState(0)
+  const [isBuy, setIsBuy] = useState(true)
+  const [amount, setAmount] = useState(0)
+  const [price, setPrice] = useState(0)
 
   const provider = useSelector(state => state.provider.connection)
-  const exchange = useSelector(state => state.exchange.contract)
   const tokens = useSelector(state => state.tokens.contracts)
+  const exchange = useSelector(state => state.exchange.contract)
+
   const dispatch = useDispatch()
 
-
-
-
-  const buyRef = useRef (null)
-  const sellRef = useRef (null)
-
+  const buyRef = useRef(null)
+  const sellRef = useRef(null)
 
   const tabHandler = (e) => {
     if(e.target.className !== buyRef.current.className) {
-      e.target.className = "tab tab--active"
-      buyRef.current.className = "tab"
+      e.target.className = 'tab tab--active'
+      buyRef.current.className = 'tab'
       setIsBuy(false)
     } else {
-      e.target.className = "tab tab--active"
-      sellRef.current.className = "tab"
+      e.target.className = 'tab tab--active'
+      sellRef.current.className = 'tab'
       setIsBuy(true)
     }
   }
@@ -44,7 +39,6 @@ const Order = () => {
   const sellHandler = (e) => {
     e.preventDefault()
     makeSellOrder(provider, exchange, tokens, { amount, price }, dispatch)
-    console.log('sellHandler...')
     setAmount(0)
     setPrice(0)
   }
@@ -81,7 +75,6 @@ const Order = () => {
           <label htmlFor="price">Sell Price</label>
         )}
 
-
         <input
             type="text"
             id='price'
@@ -92,9 +85,9 @@ const Order = () => {
 
         <button className='button button--filled' type='submit'>
           {isBuy ? (
-            <span>Buy Order</span>
+              <span>Buy Order</span>
           ) : (
-            <span>Sell order</span>
+              <span>Sell Order</span>
           )}
         </button>
       </form>

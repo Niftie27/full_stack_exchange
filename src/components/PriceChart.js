@@ -24,7 +24,7 @@ const PriceChart = () => {
           <h2>{symbols && `${symbols[0]}/${symbols[1]}`}</h2>
 
           {priceChart && (
-          
+
             <div className='flex'>
 
               {priceChart.lastPriceChange === '+' ? (
@@ -42,9 +42,9 @@ const PriceChart = () => {
       </div>
 
       {!account ? (
-        <Banner text={'Please Connect with Metamask'} />
+        <Banner text={'Please connect with Metamask'} />
       ) : (
-        <Chart 
+        <Chart
           type="candlestick"
           options={options}
           series={priceChart ? priceChart.series : defaultSeries }
@@ -52,7 +52,6 @@ const PriceChart = () => {
           height="100%"
         />
       )}
-
 
     </div>
   );
