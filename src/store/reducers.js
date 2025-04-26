@@ -258,7 +258,6 @@ export const exchange = (state = DEFAULT_EXCHANGE_STATE, action) => {
           isPending: false,
           isSuccessful: false,
           isError: true
-
         },
         transferInProgress: false
       }

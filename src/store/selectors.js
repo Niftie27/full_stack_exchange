@@ -31,7 +31,7 @@ const openOrders = state => {
 }
 
 // ------------------------------------------------------------------------------
-// MY OPEN ORDERS
+// MY EVENTS
 
 export const myEventsSelector = createSelector(
   account,
@@ -42,7 +42,6 @@ export const myEventsSelector = createSelector(
     return events
   }
 )
-
 
 // ------------------------------------------------------------------------------
 // MY OPEN ORDERS
