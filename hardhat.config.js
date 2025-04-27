@@ -1,18 +1,12 @@
-require("@nomiclabs/hardhat-waffle");
-require("dotenv").config();
+// hardhat.config.js ─ WORKING EXAMPLE
+require("@nomiclabs/hardhat-waffle");   // plugins first
+require("dotenv").config();             // <-- pulls values from .env
 
-// This is a sample Hardhat task. To learn how to create your own go to
-// https://hardhat.org/guides/create-task.html
-task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
-
-  for (const account of accounts) {
-    console.log(account.address);
-  }
-});
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
+// ────────────────────────────────────────────────────────────────
+// 1.  Grab the env-vars **once** so we can use them like normal
+//     JavaScript variables everywhere below.
+// ────────────────────────────────────────────────────────────────
+const { ALCHEMY_API_KEY, PRIVATE_KEYS } = process.env;
 
 /**
  * @type import('hardhat/config').HardhatUserConfig
@@ -20,6 +14,23 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
 module.exports = {
   solidity: "0.8.0",
   networks: {
-    localhost: {}
-  },
+    localhost: {},
+
+    // ---- Polygon Amoy testnet ----
+    amoy: {
+      // use the API key from .env
+      url: `https://polygon-amoy.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+
+      // turn "key1,key2, key3" into ["key1", "key2", "key3"]
+      accounts: PRIVATE_KEYS
+        ? PRIVATE_KEYS.split(",").map(k => k.trim())
+        : []                 // ← empty array if PRIVATE_KEYS isn't set
+    },
+
+    // ── Sepolia testnet ──
+    sepolia: {
+      url: `https://eth-sepolia.g.alchemy.com/v2/${ALCHEMY_API_KEY}`,
+      accounts: PRIVATE_KEYS.split(",").map(k => k.trim())
+    }
+  }
 };
