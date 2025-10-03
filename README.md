@@ -1,7 +1,9 @@
 # DEX Tangle Exchange (localhost setup)
 
-**Live demo:** https://tangledex.netlify.app/ 
-**Repo:** https://github.com/Niftie27/DEX-Tangle-Exchange
+**Live demo:** https://tangledex.netlify.app/   
+**Repo:** https://github.com/Niftie27/DEX-Tangle-Exchange    
+
+**Important:** must connect at least 2 accounts to perform trading (after local deployment)
 
 ## Architecture
 | Layer | Technology | Folder / file |
@@ -43,7 +45,7 @@ nvm install 20.10.0
 
 ### WSL Installation and Local Setup (Windows 10/11)
 # 1. Clone the repository
-git clone https://github.com/Niftie27/dex.git  
+git clone https://github.com/Niftie27/full_stack_exchange.git  
 # 2. Switch to the project folder
 cd dex
 # 3. Install dependencies
@@ -66,7 +68,7 @@ On Linux or macOS, skip the Prerequisites for Windows and Ubuntu & Windows Termi
 and go straight to the Installation and local setup section.
 After installing Node.js (e.g., using nvm)
 nvm install 20  # latest LTS
-git clone https://github.com/Niftie27/DEX-Tangle-Exchange.git  
+git clone https://github.com/Niftie27/full_stack_exchange.git  
 cd DEX-Tangle-Exchange
 npm install  
 npx hardhat node  
