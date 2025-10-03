@@ -16,9 +16,9 @@ async function main() {
   console.log(`Deployer: ${deployer.address}\n`);
 
   // Deploy tokens
-  const dapp = await Token.deploy("Dapp University", "DAPP", "1000000");
-  await dapp.deployed();
-  console.log(`DAPP  deployed to: ${dapp.address}`);
+  const TANG = await Token.deploy("Tangle", "TANG", "1000000");
+  await TANG.deployed();
+  console.log(`TANG  deployed to: ${TANG.address}`);
 
   const mETH = await Token.deploy("mETH", "mETH", "1000000");
   await mETH.deployed();

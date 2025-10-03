@@ -3,7 +3,7 @@
     "exchange": {
       "address": "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9"
     },
-    "DApp": {
+    "TANG": {
       "address": "0x5FbDB2315678afecb367f032d93F642f64180aa3"
     },
     "mETH": {
@@ -18,7 +18,7 @@
     "exchange": {
       "address": "0x44c68348da3C22c64F58Cdc0734A9dE49b71a462"
     },
-    "DApp": {
+    "TANG": {
       "address": "0x6989ef0c283103df4Cb1993DD053d921EFfbB3B7"
     },
     "mETH": {
